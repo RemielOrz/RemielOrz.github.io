@@ -1,48 +1,13 @@
 /*!
  * Created By remiel.
- * Date: 14-11-27
- * Time: 上午13:15
+ * Date: 14/11/28
+ * Time: 下午9:28
  */
 
-require.config({
-    baseUrl: location.port === "3000" ? "./js/app/" : "./js/app/",
-    paths: {
-        "$":(new RegExp(" AppleWebKit/")).test(navigator.userAgent) ? "../build/lib/zepto/zepto.min" : "../build/lib/jquery/jquery-1.11.1.min"
-        ,"template":"../build/artTemplate/template"
-        ,"lazyload":"../build/lazyload/lazyload"
-        ,"Swipe": "../build/swipe/swipe"
-
-        ,"Base": "../build/base"
-
-        ,"header": "../build/app/header/header"
-        ,"fansPost": "../build/app/fansPost/fansPost"
-        ,"news": "../build/app/news/news"
-        ,"menuTeam": "../build/app/menuTeam/menuTeam"
-    },
-    shim: {
-        "$": {
-            exports: "$"
-        }
-        ,"template": {
-            exports: "template"
-        }
-        ,"lazyload": ["$"]
-        ,"Swipe": {
-            deps: ["$"],
-            exports: "Swipe"
-        }
-
-    }
-});
-//
-require(["Base","template","Swipe","lazyload"],function(Base,template,Swipe,lazyload){
-    console.log('[app init]');
+define(["Base","Swipe"],function(Base,Swipe) {
+    console.log('[module: banner]');
     var $ = Base.$;
     var u = Base.utils;
-
-    Base.BASE_URL = location.port === "3000" ? "" : "./assets";
-
-    require(["header"]);
 
     //banner
     var $swipe = $('#js-swipe-banner')
@@ -76,13 +41,9 @@ require(["Base","template","Swipe","lazyload"],function(Base,template,Swipe,lazy
         });
         $swipe__item.find('img').show();
     }
+
     $('[lazyload]').lazyload(function(e){
         //console.log(e);
     });
 
-
-    require(["news","fansPost"]);
-    if(!$.os || !($.os.phone || $.os.tablet)) require(["menuTeam"]);
-
 });
-
